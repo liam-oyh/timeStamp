@@ -25,6 +25,25 @@ app.get("/api/hello", function (req, res) {
 });
 
 
+//my timestamp api endpoint
+app.get('/api/', function(req, res) {
+  var utcTime = new Date().toUTCString();
+  var unixTime = Date.parse(utcTime);
+  res.json( {"unix": unixTime, "utc": utcTime}); 
+});
+
+app.get('/api/:time', function(req, res) {
+  var dateTime = new Date(req.params.time);
+ //check whether input is time
+  if (dateTime.getTime() > 0) {
+    var utcTime = dateTime.toUTCString();
+    var unixTime = Date.parse(dateTime.toString());
+    res.json( {"unix": unixTime, "utc": utcTime}); 
+  };
+    res.json({"error": "Invalid Date"})
+});
+
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
