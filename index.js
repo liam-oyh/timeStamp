@@ -34,13 +34,20 @@ app.get('/api/', function(req, res) {
 
 app.get('/api/:time', function(req, res) {
   var dateTime = new Date(req.params.time);
+  var utcTime = new Date(parseInt(req.params.time));
  //check whether input is time
   if (dateTime.getTime() > 0) {
     var utcTime = dateTime.toUTCString();
-    var unixTime = Date.parse(dateTime.toString());
+    unixTime = Date.parse(dateTime.toString());
     res.json( {"unix": unixTime, "utc": utcTime}); 
-  };
-    res.json({"error": "Invalid Date"})
+  } else if (utcTime.getTime() > 0) {
+    utcTime = utcTime.toUTCString();
+    unixTime = Date.parse(utcTime.toString());
+    res.json( {"unix": unixTime, "utc": utcTime});
+  }  
+  
+  res.json({"error": unixTime});  
+    
 });
 
 
