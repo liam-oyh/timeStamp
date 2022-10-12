@@ -46,7 +46,7 @@ app.get('/api/:time', function(req, res) {
     res.json( {"unix": unixTime, "utc": utcTime});
   }  
   
-  res.json({"error": unixTime});  
+  res.json({"error": "Invalid Date"});  
     
 });
 
